@@ -8,7 +8,21 @@ This chart deploys Metaflow Services in a Kubernetes cluster. Specifically, it i
 
 PostgreSQL subchart is included to make it easier to deploy Metaflow for evaluation or development purposes. In production, we recommend to use a managed PostgreSQL offering such as AWS RDS and disable PostgreSQL sub-chart by setting `postgresql.enabled` to `false`.
 
-## Quickstart
+## Customizations
+* MinIO for S3 object storage
+* Traefik as a reverse-proxy
+
+MinIO subchart is included to make it easier to deploy Metaflow for evaluation or development purposes. In production, we recommend to use AWS S3 and disable MinIO sub-chart by setting `minio.enabled` to `false`.
+
+Traefik subchart is included to make it easier to deploy Metaflow for evaluation or development purposes. In production, we recommend to use AWS Route53 and disable Traefik sub-chart by setting `traefik.enabled` to `false`.
+
+## TODOs
+
+* Fix MinIO configuration for S3
+* Fix Kubernetes submission errors
+* Test some scalable jobs
+
+# Quickstart
 
 Prerequisites:
 
@@ -45,7 +59,7 @@ NOTES:
 5. Install metaflow + kubernetes client: `pip install metaflow kubernetes`
 6. Configure metaflow for kubernetes: `metaflow configure kubernetes`
 7. Enter Kubernetes info (here be dragons) - this will create a new file `/root/.metaflowconfig.config.json`
-8. Follow tutorials for using kubernetes decorator: https://docs.metaflow.org/getting-started/tutorials/season-2-scaling-out-and-up/episode05
+8. Follow [tutorials](https://docs.metaflow.org/getting-started/tutorials) for using kubernetes decorator: https://docs.metaflow.org/getting-started/tutorials/season-2-scaling-out-and-up/episode05
 
 
 NOTES:
@@ -72,8 +86,3 @@ NOTES:
   ```
 
 
-## TODOs
-
-* Fix MinIO configuration for S3
-* Fix Kubernetes submission errors
-* Test some scalable jobs
