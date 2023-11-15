@@ -70,3 +70,10 @@ NOTES:
     "METAFLOW_SERVICE_URL": "http://metaflow-metaflow-service.default.svc.cluster.local"
   }
   ```
+
+
+## TODOs
+
+* Fix MinIO configuration for S3
+* Fix Kubernetes submission errors
+* Test some scalable jobs
