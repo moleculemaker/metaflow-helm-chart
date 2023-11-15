@@ -69,7 +69,8 @@ NOTES:
     Kubernetes error:
     The @kubernetes decorator requires --datastore=s3 or --datastore=azure or --datastore=gs at the moment.
   ```
-* After trying to configure it to use MinIO for S3, I get more errors:
+* After trying to configure it to use MinIO for S3, I get more errors
+* My configuration:
   ```json
   {
     "METAFLOW_S3_ENDPOINT_URL": "s3://metaflow-minio.default.svc.cluster.local:9000/",
