@@ -36,8 +36,20 @@ Steps:
 3. Download Helm dependencies: `helm dep build`
 4. Install or upgrade the release with Helm: `helm upgrade --install metaflow . -f values.local.yaml`
 5. Wait for pods to become ready (`1/1 Running`): `kubectl get pods -w`
-6. Navigate your browser to: http://metaflow.proxy.localhost
 
+```bash
+% kubectl get pods
+NAME                                          READY   STATUS    RESTARTS        AGE
+metaflow-metaflow-service-6fbccbdd47-jr77f    1/1     Running   1 (4h50m ago)   4h51m
+metaflow-metaflow-ui-78b554b487-pn5fd         1/1     Running   0               47m
+metaflow-metaflow-ui-static-c8487dd87-54snm   1/1     Running   0               4h45m
+metaflow-minio-7b89d9847d-pps5r               1/1     Running   1 (4h50m ago)   4h51m
+metaflow-postgresql-0                         1/1     Running   1 (4h50m ago)   4h51m
+metaflow-traefik-fc9bbb459-26prh              1/1     Running   1 (4h50m ago)   4h51m
+py-shell                                      1/1     Running   0               4h24m
+```
+
+6. Navigate your browser to: http://metaflow.proxy.localhost
 
 You should see the Metaflow UI (which appears to be read-only?)
 ![Screenshot 2023-11-15 at 12 31 01 AM](https://github.com/moleculemaker/metaflow-helm-chart/assets/1413653/0ed412fb-1958-4a39-a018-3aabb71d138e)
