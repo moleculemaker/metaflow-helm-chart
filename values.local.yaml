@@ -1,0 +1,131 @@
+metaflow-service:
+  image:
+    repository: public.ecr.aws/outerbounds/metaflow_metadata_service
+  metadatadb:
+    password: metaflow
+    name: metaflow
+    user: metaflow
+  ingress:
+    enabled: true
+#    className: traefik
+    annotations:
+    #    traefik.ingress.kubernetes.io/router.middlewares: default-ip-ratelimit@kubernetescrd
+         traefik.ingress.kubernetes.io/router.middlewares: mmli-cors-header@kubernetescrd
+    hosts:
+      - host: metaflow.service.localhost
+        paths:
+          - path: /
+            pathType: ImplementationSpecific 
+
+metaflow-ui:
+  # Note: for security reasons, these values should NOT be set in plain text.
+  #       Better options of passing these values are using environment variables,
+  #       kubernetes secret + values file, etc.
+  
+  # For MinIO
+  #  --set metaflow-ui.uiBackend.metaflowDatastoreSysRootS3=s3://metaflow-test/metaflow \
+  #  --set metaflow-ui.uiBackend.metaflowS3EndpointURL="<NGROK-TUNNEL-URL-COMES-HERE>" \
+  #  --set "metaflow-ui.envFrom[0].secretRef.name=metaflow-minio"
+  envFrom:
+    secretRef:
+      name: metaflow-minio
+
+  uiStatic:
+    metaflowUIBackendURL: "http://metaflow.proxy.localhost/api/"
+  uiBackend:
+    metadatadb:
+      password: metaflow
+      name: metaflow
+      user: metaflow
+  
+    metaflowDatastoreSysRootS3: "s3://metaflow-test/metaflow"
+      # The root S3 bucket prefix that will be used by metaflow
+  
+    metaflowServiceURL: "http://metaflow-metaflow-service.default.svc.cluster.local:8080/api/metadata"
+      # The metaflow metadata service URL
+  
+    metaflowS3EndpointURL: "metaflow-metaflow-minio.default.svc.cluster.local:9000"
+      # This should be set only when using an S3 compatible object storage like minio
+  
+  
+    env:
+      # Additional environment variables for metaflow-ui static deployment. Example config:
+      #- name: METAFLOW_SERVICE
+      #  value: "http://metaflow.service.localhost/"
+      #- name: METAFLOW_SERVICE_URL
+      #  value: "http://metaflow-metaflow-service.default.svc.cluster.local/"
+      #  value: "http://metaflow.proxy.localhost/"
+      #- name: METAFLOW_SERVICE_PROXY
+      #  value: "http://metaflow.proxy.localhost/"
+      #- name: REACT_APP_METAFLOW_SERVICE
+      #  value: "http://metaflow.proxy.localhost/"
+      #- name: REACT_APP_METAFLOW_SERVICE_WS
+      #  value: "http://metaflow.proxy.localhost/"
+  
+    metadatadbEnvVars:
+      password: metaflow
+      name: metaflow
+      user: metaflow
+  
+  ingress:
+    enabled: true
+#    className: traefik
+    annotations:
+        #traefik.ingress.kubernetes.io/router.middlewares: default-ip-ratelimit@kubernetescrd
+         traefik.ingress.kubernetes.io/router.middlewares: mmli-cors-header@kubernetescrd
+    hosts:
+      - host: metaflow.proxy.localhost
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+
+postgresql:
+  # postgresql.enabled -- Flag to install Postgresql
+  enabled: true
+  postgresqlPassword: metaflow
+  postgresqlDatabase: metaflow
+  postgresqlUsername: metaflow
+#  global:
+#    storageClass: hostpath
+  auth:
+    rootPassword: "metaflow"
+    password: "metaflow"
+    username: "metaflow"
+    database: "metaflow"
+
+minio:
+  # minio.enabled -- Flag to install MinIO
+  enabled: true
+  apiIngress:
+    #ingressClassName: nginx
+    ingressClassName: metaflow-traefik
+  ingress:
+    #ingressClassName: nginx
+    ingressClassName: metaflow-traefik
+#  global:
+#    storageClass: hostpath
+  auth:
+    rootUser: minioadmin
+    rootPassword: minioadmin
+
+traefik:
+  enabled: true
+  hostNetwork: true
+
+  ports:
+    web:
+      port: 80
+ #     redirectTo:
+ #       port: websecure
+    websecure:
+      port: 443
+  
+  securityContext:
+    capabilities:
+      drop: [ALL]
+      add: [NET_BIND_SERVICE]
+    readOnlyRootFilesystem: true
+    runAsGroup: 0
+    runAsNonRoot: false
+    runAsUser: 0
+

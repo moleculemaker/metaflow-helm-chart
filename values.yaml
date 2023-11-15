@@ -1,0 +1,29 @@
+metaflow-service:
+  metadatadb:
+    host: "metaflow-postgresql.default.svc.cluster.local"
+    password: metaflow
+    name: metaflow
+    user: metaflow
+
+metaflow-ui:
+  # Note: for security reasons, these values should NOT be set in plain text.
+  #       Better options of passing these values are using environment variables,
+  #       kubernetes secret + values file, etc.
+  metadatadb:
+    host: "metaflow-postgresql.default.svc.cluster.local"
+    password: metaflow
+    name: metaflow
+    user: metaflow
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: localhost
+
+postgresql:
+  # postgresql.enabled -- Flag to install Postgresql
+  enabled: true
+  postgresqlPassword: metaflow
+  postgresqlDatabase: metaflow
+  postgresqlUsername: metaflow
+
