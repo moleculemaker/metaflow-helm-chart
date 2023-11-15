@@ -45,7 +45,7 @@ You should see the Metaflow UI (which appears to be read-only?)
 
 NOTES:
 
-* Dependency charts will be downloaded to the `charts/` folder - this is not persisted to git
+* Dependency charts will be downloaded to the `charts/` folder
 * Installing to a namespace other then the `default` namespace requires updating URLs in the values.local.yaml file
 * This chart installs MinIO, but the metaflow-service may not be properly configured to use this yet
 * The infrastructure appears to come online, but I have not yet had success submitting a Job to this infrastructure
