@@ -22,6 +22,14 @@ Traefik subchart is included to make it easier to deploy Metaflow for evaluation
 * Fix Kubernetes submission errors
 * Test some scalable jobs
 
+## Sources
+
+* Base Helm chart: https://github.com/outerbounds/metaflow-tools/tree/master/k8s/helm/metaflow
+* Documentations: https://docs.metaflow.org/scaling/remote-tasks/kubernetes
+* Blog post: https://medium.com/@rezashabrang.m/configuring-metaflow-for-on-prem-deployment-f8c4da24a097
+* Example metaflow deploy (Minikube + Airflow + Minio): https://github.com/outerbounds/metaflow-with-airflow-minio
+* Confirmation of MinIO support: https://github.com/Netflix/metaflow/issues/682
+
 # Quickstart
 
 Prerequisites:
